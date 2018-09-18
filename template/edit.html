@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Edit {{.}}</title>
+        <link rel="stylesheet" href="/static/normalize.css">
+        <link rel="stylesheet" href="/static/editor.css">
+    </head>
+    <body>
+        <input type="button" value="Save" onclick="save()">
+        <hr>
+        <div class="code-container">
+            <pre><code id="code-area" contenteditable="true" style="outline: none">Edit</code><pre>
+        </div>
+    <script>
+        onload = () => {
+            'use strict';
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    document.getElementById('code-area')
+                        .textContent = xhr.responseText;
+                }
+            }
+            // I don't want browser to cache response so add random query
+            // parameter to url.
+            // ref: https://developer.mozilla.org/docs/Web/API/XMLHttpRequest/Using_XMLHttpRequest#Bypassing_the_cache
+            xhr.open('GET', '/raw/{{.}}?' + (new Date()).getTime(), true);
+            xhr.send();
+        }
+
+        const save = () => {
+            'use strict';
+            const xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = () => {
+                if (xhr.readyState == 4) {
+                    location.href = '/';
+                }
+            }
+            xhr.open('POST',
+                '/save?name={{.}}', true);
+            const blob = new Blob(
+                [document.getElementById('code-area').textContent],
+                {type: 'text/plain'});
+            xhr.send(blob);
+        }
+    </script>
+    </body>
+</html>
