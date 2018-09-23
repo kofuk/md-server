@@ -2,6 +2,7 @@ package mdprocessor
 
 import (
     "bufio"
+    "net/url"
     "strconv"
 )
 
@@ -17,8 +18,10 @@ func compileHeader(w *bufio.Writer, line string) {
             break
         }
     }
-    write(w, "<h" + strconv.Itoa(nsharp) + ">")
-    compileDecoration(w, getHeaderName(line), false)
+    name := getHeaderName(line)
+    write(w, "<h" + strconv.Itoa(nsharp) +
+        " id=\""+ url.QueryEscape(name) + "\">")
+    compileDecoration(w, name, false)
     write(w, "</h" + strconv.Itoa(nsharp) + ">")
 }
 

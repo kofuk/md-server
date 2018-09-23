@@ -5,16 +5,6 @@ import (
     "io"
 )
 
-/**
-type UnorderedList struct {
-    items []ListItem
-}
-
-type ListItem struct {
-    children []interface
-}
-*/
-
 func compileList(w *bufio.Writer, line string, r *bufio.Reader) {
     write(w, "<ul><li>")
     compileDecoration(w, getListItemName(line), false)
