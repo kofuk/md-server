@@ -4,12 +4,13 @@ import (
     "flag"
     "fmt"
     "html/template"
-    "md-server/mdprocessor"
     "net/http"
     "io"
     "io/ioutil"
     "log"
     "os"
+
+    "github.com/KoFuk/md-server/mdprocessor"
 )
 
 var addr, fileDir, username, passwd *string
@@ -18,6 +19,7 @@ var hasAuth bool
 //TODO: Implement basic auth.
 
 func main() {
+
     addr = flag.String("addr", ":80", "Address and port number to bind.")
     fileDir = flag.String("datadir", "pages/",
         "Location to save and load data.")
