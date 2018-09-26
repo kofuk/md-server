@@ -32,7 +32,9 @@ func Process(input *os.File, w *bufio.Writer) {
     title := detectTitle(firstLine)
     preExecute(w, title)
     w.Flush()
-    processLine(firstLine, r, w)
+    if !strings.HasPrefix(firstLine, "Title:") {
+        processLine(firstLine, r, w)
+    }
     w.Flush()
     indexReader := bufio.NewReader(strings.NewReader(indexMd))
     indexLine, _, err := indexReader.ReadLine()

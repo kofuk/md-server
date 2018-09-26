@@ -13,6 +13,12 @@ func errorExit(message string) {
 func detectTitle(line string) string {
     if strings.HasPrefix(line, "# ") {
         return getHeaderName(line)
+    } else if strings.HasPrefix(line, "Title:") {
+        titleOffset := 6
+        for line[titleOffset] == ' ' {
+            titleOffset++
+        }
+        return line[titleOffset:]
     }
     return ""
 }
