@@ -2,7 +2,6 @@ package mdprocessor
 
 import (
     "bufio"
-    "net/http"
     "net/url"
     "io"
     "strings"
@@ -13,9 +12,8 @@ var configurationRegistry struct {
     hasMath bool
 }
 
-func Process(input *os.File, output *http.ResponseWriter) {
+func Process(input *os.File, w *bufio.Writer) {
     r := bufio.NewReader(input)
-    w := bufio.NewWriter(*output)
     indexMd := createIndexMd(r)
     input, err := os.Open(input.Name())
     if err != nil {

@@ -1,6 +1,9 @@
+// +build server
+
 package main
 
 import (
+    "bufio"
     "flag"
     "fmt"
     "html/template"
@@ -19,7 +22,6 @@ var hasAuth bool
 //TODO: Implement basic auth.
 
 func main() {
-
     addr = flag.String("addr", ":80", "Address and port number to bind.")
     fileDir = flag.String("datadir", "pages/",
         "Location to save and load data.")
@@ -70,7 +72,7 @@ func mdHandler(w http.ResponseWriter, r *http.Request) {
         http.NotFound(w, r)
     }
     defer file.Close()
-    mdprocessor.Process(file, &w)
+    mdprocessor.Process(file, bufio.NewWriter(w))
 }
 
 func uploadHandler(w http.ResponseWriter, r *http.Request) {
