@@ -20,7 +20,7 @@ func compileHeader(w *bufio.Writer, line string) {
     }
     name := getHeaderName(line)
     write(w, "<h" + strconv.Itoa(nsharp) +
-        " id=\""+ url.QueryEscape(name) + "\">")
+        " id=\""+ url.PathEscape(name) + "\">")
     compileDecoration(w, name, false)
     write(w, "</h" + strconv.Itoa(nsharp) + ">")
 }

@@ -111,7 +111,7 @@ func createIndexMd(r *bufio.Reader) string {
                 result,
                 string(space),
                 `- <a href="#`,
-                url.QueryEscape(name),
+                url.PathEscape(name),
                 `">`,
                 name,
                 "</a>\n",
