@@ -1,10 +1,14 @@
 Title: Test page
 # Title1
 
+![Image](https://www.chronoscoper.com/images/chronoscope_title.png)  
+[Link](https://www.chronoscoper.com/)  
+?[?](This is help) ?[!](This is info) ?[Tooltip over text](Hello!)
+
 ## Title2
 
 Hello, *world*! This is a ~~simple~~ **Markdown** parser.  
-And, $\frac{1}{2} \lambda$!
+And, $\frac{1}{2} \lambda$!  
 \~~ renders strikethrough.  
 \* renders span italic.  
 \*\* renders span bold.  
@@ -52,5 +56,5 @@ public class Main {
 
 # Completion
 
-It *should **be completed.  
+It *should **be ?[completed](Let's say, this markdown processor doesn't support multi-lined styling.).  
 And ~~this should be completed.

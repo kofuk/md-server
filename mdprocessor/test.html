@@ -1,5 +1,6 @@
-package mdprocessor
-const defStyle = `
+<!doctype html><html><head><meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width"><title>Test page</title><style>
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
@@ -416,4 +417,32 @@ const defStyle = `
 h1.page-title {
     font-size: 40px
 }
-`
+</style></head><body><h1 class="page-title">Test page</h1><div class="markdown-body"><details><summary>Index</summary><div><ul><li><a href="#Title1">Title1</a><ul><li><a href="#Title2">Title2</a></li></ul><li><a href="#Completion">Completion</a></li></ul></ul></div></details><h1 id="Title1">Title1</h1> <img src="https://www.chronoscoper.com/images/chronoscope_title.png", alt="Image"><br> <a href="https://www.chronoscoper.com/">Link</a><br> <span class="tooltip" data-tooltip="This is help"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAA6UlEQVR4AZTRJUIgABBA0dfXfSm4
+u7tFKtZpaIPKFfCKa+cCZOwCNFwi7u7OnzRuPs53xRo0KPbds/w36vSejPnnEREW7ekSCkJ12bMo
+4mGVJUti8UeNGn8Qe2kLAGDQsXwkWL1stSoBeY4NAnxzohdMWfTXXwumQY8T34Ayp7JBsxLQagtk
+O1UJNDr11R1B5oyDr041Ak1OfQYQa8OsH+CzU01AxW076LfjJyDLqYrHg0OSNAC9d4Mz4EQuYMIE
+IMeJAQD+WbIsGlSpAtGXx3zwmrBn3xLuEf+MvfXgsyGSSi4QgpIKqQAAS9RSCXvHx4QAAAAASUVO
+RK5CYII="></span> <span class="tooltip" data-tooltip="This is info"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAQAAAD8x0bcAAAAvklEQVR4AZXSsW0CQRRF0VMAgs0W
+p9hIiAa8th1sDRbuAiIohIDYSBCYMiiGoQYS9hOCRpNwf/r0daX3PE+lNTfXqhQZ+hcPd1DLGDu5
+2BiBkY2LkzEADCXJFABMJckLAHtX34C1NeDL1R5goLMlD+FPZwD8CI0SjfALLIV+8VNfWAIroQfg
+6AigJ6yAmdAUQ+/CLBfPQ9u7ODudz9zJh84OgFpyNgEAE0lSA8BrsZY3GbVDqeDyVBYWWpVnuQFI
+/EgpslHR5wAAAABJRU5ErkJggg=="></span> <span data-tooltip="Hello!\A" class="tooltip text-tooltip">Tooltip over text</span><h2 id="Title2">Title2</h2> Hello, <em>world</em> This is a <del>simple</del> <strong>Markdown</strong> parser.<br> And, $\frac{1}{2} \lambda$!<br> ~~ renders strikethrough.<br> * renders span italic.<br> ** renders span bold.<br><pre><code>package com.example.testapp;
+
+public class Main {
+    public void main(String... args) {
+        System.out.println("Hello, world!");
+    }
+}
+</code></pre><div style="margin:20px">$\cos 2 \theta = \cos ^2 \theta - 1
+$</div><pre><code>&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Hello&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre><ul><li>List<ul><li>List</li><li>List<ul><li>List</li></ul></li></ul><li>List</li><li>List</li></ul></ul><blockquote><p>Quote<blockquote><p>Quote<blockquote><p>Quote<br> Quote</p></blockquote></p></blockquote>Quote</p></blockquote><hr><h1 id="Completion">Completion</h1> It <em>should <strong>be <span data-tooltip="Let's say, this markdown processor doesn't support multi-lined styling." class="tooltip text-tooltip">completed</span>.</strong></em><br> And <del>this should be completed.</del></div><script type="text/x-mathjax-config">
+MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$'],['\\(','\\(']],
+processEscapes:true},CommonHTML:{matchFontHeight:false}});</script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML" async></script></body></html>
