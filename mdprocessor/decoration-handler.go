@@ -2,6 +2,8 @@ package mdprocessor
 
 import (
     "bufio"
+    "errors"
+    "fmt"
 )
 
 const (
@@ -10,6 +12,9 @@ const (
     D_STRIKE
     D_CODE
     D_MATH
+    D_LINK
+    D_IMAGE
+    D_TOOLTIP
 )
 
 func compileDecoration(w *bufio.Writer, expr string, returnAllowed bool) {
@@ -94,6 +99,56 @@ func compileDecoration(w *bufio.Writer, expr string, returnAllowed bool) {
                 }
                 cursor++
             }
+        } else if c == '[' {
+            title, content, newCursor, err := getEmbedded(cs, cursor)
+            if err == nil {
+                write(w, fmt.Sprintf(`<a href="%s">%s</a>`, content, title))
+                cursor = newCursor
+            } else {
+                write(w, "[")
+            }
+        } else if c == '!' {
+            cursor++
+            if cursor >= len(cs) {
+                write(w, "!")
+                break
+            }
+            if cs[cursor] != '[' {
+                continue
+            }
+            title, content, newCursor, err := getEmbedded(cs, cursor)
+            if err == nil {
+                write(w, fmt.Sprintf(`<img src="%s", alt="%s">`, content, title))
+                cursor = newCursor
+            }
+        } else if c == '?' {
+            cursor++
+            if cursor >= len(cs) {
+                write(w, "?")
+                break
+            }
+            if cs[cursor] != '[' {
+                continue
+            }
+            title, content, newCursor, err := getEmbedded(cs, cursor)
+            if err == nil {
+                if title == "!" || title == "?" {
+                    var displayContent string
+                    if title == "!" {
+                        displayContent = ICON_INFO
+                    } else if title == "?" {
+                        displayContent = ICON_HELP
+                    }
+                    write(w, fmt.Sprintf(`<span class="tooltip" data-tooltip="%s">` +
+                            `<img src="%s"></span>`,
+                            content, displayContent))
+                } else {
+                    write(w, fmt.Sprintf(`<span data-tooltip="%s"` +
+                            ` class="tooltip text-tooltip">%s</span>`,
+                            content, title))
+                }
+                cursor = newCursor
+            }
         } else if c == '\\' {
             cursor++
             if cursor < len(cs) {
@@ -141,6 +196,36 @@ func getLineContent(line string) (string, bool) {
         }
     }
     return result, spaceSeqLen >= 2
+}
+
+func getEmbedded(line []rune, cursor int) (string, string, int, error) {
+    initialCursor := cursor
+    cursor++
+    title := make([]rune, 0)
+    content := make([]rune, 0)
+    isInTitle := true
+    terminated := false
+    for ; cursor < len(line); cursor++ {
+        if isInTitle {
+            if line[cursor] == ']' {
+                isInTitle = false
+                continue
+            }
+            title = append(title, line[cursor])
+        } else {
+            if line[cursor] == '(' {
+                continue
+            } else if line[cursor] == ')' {
+                terminated = true
+                break
+            }
+            content = append(content, line[cursor])
+        }
+    }
+    if !terminated {
+        return "", "", initialCursor, errors.New("Unterminated embedded content")
+    }
+    return string(title), string(content), cursor, nil
 }
 
 func renderIfHr(w *bufio.Writer, line string) bool {
