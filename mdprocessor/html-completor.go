@@ -4,7 +4,7 @@ import (
     "bufio"
 )
 
-func preExecute(w *bufio.Writer, title string, needBodyTitle bool) {
+func preExecute(w *bufio.Writer, title, topic string, needBodyTitle bool) {
     write(w, `<!doctype html><html><head><meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width">`)
@@ -15,9 +15,15 @@ func preExecute(w *bufio.Writer, title string, needBodyTitle bool) {
     write(w, defStyle)
     write(w, "</style></head><body>")
     if needBodyTitle {
-        write(w, `<h1 class="page-title">`)
+        write(w, `<div class="fixed-header shadowed"><div class="header-title">`)
+        write(w, title)
+        write(w, "</div></div>")
+        write(w, `<div class="header-section"><h1 class="page-title">`)
         write(w, title)
         write(w, "</h1>")
+        write(w, `<div class="topic-list">`)
+        write(w, topic)
+        write(w, "</div></div>")
     }
     write(w, `<div class="markdown-body">`)
 }
@@ -33,5 +39,5 @@ func postExecute(w *bufio.Writer) {
         write(w, MATHJAX_CONFIG + "<script src=\"" + MATHJAX +
             "\" async></script>")
     }
-    write(w, "</body></html>")
+    write(w, `<div class="footer">マナブスコープ</div></body></html>`)
 }

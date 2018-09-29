@@ -14,7 +14,7 @@ var configurationRegistry struct {
 
 func Process(input *os.File, w *bufio.Writer) {
     r := bufio.NewReader(input)
-    indexMd := createIndexMd(r)
+    indexMd, topic := createIndexMd(r)
     input, err := os.Open(input.Name())
     if err != nil {
         errorExit("Cannot reopen file")
@@ -30,7 +30,7 @@ func Process(input *os.File, w *bufio.Writer) {
     }
     firstLine := string(linebytes)
     title, isH1 := detectTitle(firstLine)
-    preExecute(w, title, !isH1)
+    preExecute(w, title, topic, !isH1)
     w.Flush()
     if !strings.HasPrefix(firstLine, "Title:") {
         processLine(firstLine, r, w)
@@ -39,7 +39,7 @@ func Process(input *os.File, w *bufio.Writer) {
     indexReader := bufio.NewReader(strings.NewReader(indexMd))
     indexLine, _, err := indexReader.ReadLine()
     if err == nil {
-        write(w, "<details><summary>Index</summary><div>")
+        write(w, "<details><summary>目次</summary><div>")
         compileList(w, string(indexLine), indexReader)
         write(w, "</div></details>")
     }
@@ -82,12 +82,13 @@ func processLine(line string, r *bufio.Reader, w *bufio.Writer) {
     w.Flush()
 }
 
-func createIndexMd(r *bufio.Reader) string {
+func createIndexMd(r *bufio.Reader) (string, string) {
     result := ""
+    topic := ""
     for {
         bytes, _, err := r.ReadLine()
         if err != nil {
-            return result
+            return result, topic
         }
         line := string(bytes)
         if strings.HasPrefix(line, "#") {
@@ -107,6 +108,12 @@ func createIndexMd(r *bufio.Reader) string {
                 space[i] = ' '
             }
             name := getHeaderName(line)
+            if level == 1 {
+                if topic != "" {
+                    topic += "・"
+                }
+                topic += name
+            }
             result = strings.Join([]string{
                 result,
                 string(space),
@@ -118,5 +125,5 @@ func createIndexMd(r *bufio.Reader) string {
             }, "")
         }
     }
-    return result
+    return result, topic
 }

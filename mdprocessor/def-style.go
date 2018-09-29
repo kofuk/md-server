@@ -1,10 +1,15 @@
 package mdprocessor
 const defStyle = `
+html, body {
+    margin: 0;
+    padding 0;
+}
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
   line-height: 1.5;
   word-wrap: break-word;
+  margin: 10px;
 }
 .markdown-body::before {
   display: table;
@@ -388,7 +393,46 @@ const defStyle = `
   background: #f6f8fa;
   border-top: 0;
 }
+
+.header-section {
+    margin: 0;
+    background-color: #B7FE94;
+    margin-bottom: 10px;
+}
 h1.page-title {
-    font-size: 40px
+    font-size: 40px;
+    line-height: normal;
+    border-bottom: solid 4px #4CAF50;
+    padding: 10px;
+    padding-top: 106px;
+    padding-bottom: 0;
+}
+
+.topic-list {
+    font-size: 11pt;
+    color: #555;
+}
+.shadowed {
+    box-shadow:0 2px 2px 0 rgba(0,0,0,.14);
+}
+.fixed-header {
+    background-color:#4caf50;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 56px;
+    color: white;
+    z-index: 1000;
+}
+.header-title {
+    padding: 20px;
+    line-height: normal;
+}
+.footer {
+    background-color: #555;
+    padding: 10px;
+    font-size: 11pt;
+    color: #ffffff;
 }
 `
