@@ -29,8 +29,8 @@ func Process(input *os.File, w *bufio.Writer) {
         return
     }
     firstLine := string(linebytes)
-    title := detectTitle(firstLine)
-    preExecute(w, title)
+    title, isH1 := detectTitle(firstLine)
+    preExecute(w, title, !isH1)
     w.Flush()
     if !strings.HasPrefix(firstLine, "Title:") {
         processLine(firstLine, r, w)

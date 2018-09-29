@@ -1,5 +1,5 @@
 package mdprocessor
- /* DO NOT EDIT; All changes will be discarded. */ const defStyle = `
+const defStyle = `
 .markdown-body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   font-size: 16px;
@@ -387,5 +387,8 @@ package mdprocessor
   font-weight: 600;
   background: #f6f8fa;
   border-top: 0;
+}
+h1.page-title {
+    font-size: 40px
 }
 `

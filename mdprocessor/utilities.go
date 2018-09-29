@@ -10,17 +10,17 @@ func errorExit(message string) {
     fmt.Println(message)
 }
 
-func detectTitle(line string) string {
+func detectTitle(line string) (string, bool) {
     if strings.HasPrefix(line, "# ") {
-        return getHeaderName(line)
+        return getHeaderName(line), true
     } else if strings.HasPrefix(line, "Title:") {
         titleOffset := 6
         for line[titleOffset] == ' ' {
             titleOffset++
         }
-        return line[titleOffset:]
+        return line[titleOffset:], false
     }
-    return ""
+    return "", false
 }
 
 func write(w *bufio.Writer, s string) {
