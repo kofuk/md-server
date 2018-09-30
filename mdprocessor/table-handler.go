@@ -67,7 +67,8 @@ func getTableConfig(line string) ([]tableColumn, error) {
     return columns, nil
 }
 
-func compileTable(headerLine string, config []tableColumn, r *bufio.Reader, w *bufio.Writer) {
+func compileTable(headerLine string, config []tableColumn,
+        r *bufio.Reader, w *bufio.Writer) {
     write(w, "<table><thead><tr>")
     runes := []rune(headerLine)
     cursor := 0
@@ -91,6 +92,9 @@ func compileTable(headerLine string, config []tableColumn, r *bufio.Reader, w *b
     for {
         b, _, err := r.ReadLine()
         if err != nil {
+            break
+        }
+        if len(b) == 0 {
             break
         }
         line := []rune(string(b))
