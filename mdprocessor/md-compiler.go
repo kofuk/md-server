@@ -44,29 +44,39 @@ func Process(input *os.File, w *bufio.Writer) {
         write(w, "</div></details>")
     }
     w.Flush()
+    needsRead := true
+    var line string
     for {
-        linebytes, _, err := r.ReadLine()
-        if err == io.EOF {
-            break
-        } else if err != nil {
-            errorExit("Error reading file")
-            return
+        if needsRead {
+            linebytes, _, err := r.ReadLine()
+            if err == io.EOF {
+                break
+            } else if err != nil {
+                errorExit("Error reading file")
+                return
+            }
+            if len(linebytes) == 0 {
+                continue
+            }
+            line = string(linebytes)
+        } else {
+             needsRead = true
+         }
+        line = processLine(line, r, w)
+        if line != "" {
+            needsRead = false
         }
-        if len(linebytes) == 0 {
-            continue
-        }
-        line := string(linebytes)
-        processLine(line, r, w)
     }
     postExecute(w)
     w.Flush()
 }
 
-func processLine(line string, r *bufio.Reader, w *bufio.Writer) {
+func processLine(line string, r *bufio.Reader, w *bufio.Writer) string {
     if renderIfHr(w, line) {
         w.Flush()
-        return
+        return ""
     }
+    var nextLine string
     if strings.HasPrefix(line, "#") {
         compileHeader(w, line)
     } else if strings.HasPrefix(line, "```") {
@@ -76,10 +86,23 @@ func processLine(line string, r *bufio.Reader, w *bufio.Writer) {
     } else if strings.HasPrefix(line, ">") {
         compileBlockQuote(w, line, r)
     } else {
+        if strings.Contains(line, "|") {
+            nextBytes, _, err := r.ReadLine()
+            if err == nil {
+                nextLine = string(nextBytes)
+                columns, err := getTableConfig(nextLine)
+                if err == nil && strings.Count(line, "|") == len(columns) - 1 {
+                    compileTable(line, columns, r, w)
+                    return ""
+                } else {
+                }
+            }
+        }
         w.WriteString(" ")
         compileDecoration(w, line, true)
     }
     w.Flush()
+    return nextLine
 }
 
 func createIndexMd(r *bufio.Reader) string {
