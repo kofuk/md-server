@@ -99,8 +99,8 @@ func compileTable(headerLine string, config []tableColumn,
         }
         line := []rune(string(b))
         write(w, "<tr>")
+        cursor = 0
         for i:= 0; i < len(config); i++ {
-            cursor = 0
             write(w, "<td")
             align := config[i].align
             if align == ALIGN_LEFT {
@@ -114,6 +114,7 @@ func compileTable(headerLine string, config []tableColumn,
             data, newCursor := getColumn(line, cursor)
             cursor = newCursor
             compileDecoration(w, data, true)
+            write(w, "</td>")
         }
         write(w, "</tr>")
     }
