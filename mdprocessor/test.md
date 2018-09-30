@@ -58,3 +58,10 @@ public class Main {
 
 It *should **be ?[completed](Let's say, this markdown processor doesn't support multi-lined styling.).  
 And ~~this should be completed.
+
+# Table
+
+Title1 | Title2 | Title3 | Title4
+------:|--------|:------:|:------
+Data1 | Data2 | Data3 | Data4
+Data5 | Data6 | Data7 | Data8
