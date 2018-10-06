@@ -1,13 +1,14 @@
 package mdprocessor
 
 import (
-    "io"
+	"io"
 )
 
 type mdInput struct {
-    Input *io.Reader
-    Output *io.Writer
+	Input  *io.Reader
+	Output *io.Writer
 }
+
 /*
 func parseOptions() *[]mdInput {
     var inputs []mdInput
