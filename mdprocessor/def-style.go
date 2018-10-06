@@ -1,4 +1,5 @@
 package mdprocessor
+
 const defStyle = `
 html, body {
     margin: 0;
